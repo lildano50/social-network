@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-const thoughtsSchema = require('./Thought');
+const thoughtSchema = require('./Thought');
 
 
 const userSchema = new mongoose.Schema({
-    userName: {type: String, required: true, unique: true, trimmed},
-    email: {type: String, required: true, unique: true, /*VALIDATION*/},
-    thoughts: [thoughtsSchema],
-    friends: [friendsSchema],
+    userName: {type: String, required: true, unique: true, trim: true},
+    email: {type: String, required: true, unique: true, },
+    thoughts: [thoughtSchema],
+    friends: [this],
 },
 {
     toJSON: {
