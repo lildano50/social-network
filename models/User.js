@@ -1,10 +1,14 @@
 const mongoose = require('mongoose');
 const thoughtSchema = require('./Thought');
 
+const validateEmail =  function (email) {
+    var regEx = /^([a-z0-9_.-]+)@([\da-z.-]+).([a-z.]{2,6})$/;
+    return regEx.test(email);
+};
 
 const userSchema = new mongoose.Schema({
     userName: {type: String, required: true, unique: true, trim: true},
-    email: {type: String, required: true, unique: true, },
+    email: {type: String, required: true, unique: true, validate: [validateEmail, 'Please fill out a valid email']},
     thoughts: [thoughtSchema],
     friends: [this],
 },
