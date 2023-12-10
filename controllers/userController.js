@@ -43,7 +43,7 @@ module.exports = {
   async updateUser(req,res) {
     try {
         const user = await User.findOneAndUpdate(
-          {_id: req.params.userID });
+          {_id: req.params.userId });
     } catch(err) {
         res.status(500).json(err)
     }
@@ -53,7 +53,7 @@ module.exports = {
   async deleteUser(req, res) {
     try {
         const user = await User.findOneAndRemove(
-          {_id: req.params.userID}
+          {_id: req.params.userId}
         )
     } catch(err) {
         res.status(500).json(err)
