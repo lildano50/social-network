@@ -1,4 +1,5 @@
 const Thought = require('../models/Thought');
+const thoughtSchema = require('../models/Thought');
 const User = require('../models/User');
 
 module.exports = {
@@ -28,22 +29,23 @@ module.exports = {
       }
     },
   
-    //create new thought ***Need to link to associated user***
+    // create new thought ***Need to link to associated user***
     async createThought(req, res) {
       try {
-        const thought = await Thought.create(req.body);
-        console.log(thought)
-        res.json(thought);
         const user = await User.findOneAndUpdate(
           {_id: req.params.userId },
-          { $addToSet: { thoughts: req.body }},
-          // { runValidators: true, new: true }
+          { $addToSet: { thoughts: req.body.id }},
+          { runValidators: true, new: true }
         );
+        if (!user) {
+          return res.status(404).json({ message: 'No user found with that ID'});
+        }
+        res.json(user);
       } catch (err) {
         res.status(500).json(err)
       }
     },
-  
+
     //update thought by id
     async updateThought(req,res) {
       try {

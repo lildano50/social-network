@@ -7,6 +7,10 @@ const {
   updateUser,
 } = require('../../controllers/userController.js');
 
+const {
+  createThought
+} = require('../../controllers/thoughtsController.js');
+
 //Create a new user
 router.route('/').get(getUsers).post(createUser);
 
@@ -24,5 +28,7 @@ router.route('/:userId/friends/:friendId').post();
 
 // Delete a single user by ID
 router.route('/:userId').get(getSingleUser).delete(deleteUser);
+
+router.route('/:userId/thoughts').post(createThought);
 
 module.exports = router;
