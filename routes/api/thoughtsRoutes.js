@@ -14,7 +14,7 @@ router.route('/').get(getThoughts);
 router.route('/:thoughtId').get(getSingleThought);
 
 //Create a thought and push associated thought to user's thoughts array field
-router.route('/').post();
+router.route('/').post(createThought);
 
 //Update a single thought by ID
 router.route('/:thoughtId/update').get(getSingleThought).put(updateThought);
