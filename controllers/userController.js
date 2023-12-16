@@ -15,7 +15,7 @@ module.exports = {
   //get single user
   async getSingleUser(req, res) {
     try {
-      const user = await User.findOne({ _id: req.params.userId });
+      const user = await User.findOne({ _id: req.params.userId }).select('-__v');
 
       if (!user) {
         return res.status(404).json({ message: 'No user with that ID' });
@@ -55,6 +55,9 @@ module.exports = {
         const user = await User.findOneAndRemove(
           {_id: req.params.userId}
         )
+        if(!user) {
+          return res.status(404).json({ message: "No user exists." });
+        }
     } catch(err) {
         res.status(500).json(err)
     }

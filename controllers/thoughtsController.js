@@ -31,16 +31,14 @@ module.exports = {
     //create new thought ***Need to link to associated user***
     async createThought(req, res) {
       try {
-        const user = await Student.findOneAndUpdate(
+        const thought = await Thought.create(req.body);
+        console.log(thought)
+        res.json(thought);
+        const user = await User.findOneAndUpdate(
           {_id: req.params.userId },
           { $addToSet: { thoughts: req.body }},
-          { runValidators: true, new: true }
+          // { runValidators: true, new: true }
         );
-
-
-
-        const thought = await Thought.create(req.body);
-        res.json(thought);
       } catch (err) {
         res.status(500).json(err)
       }

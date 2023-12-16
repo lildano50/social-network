@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const { Schema, Types, mongoose } = require('mongoose');
 
 const reactionSchema = new mongoose.Schema({
     reactionID: {},
@@ -14,9 +14,10 @@ reactionSchema.get(function(){
 })
 
 const thoughtSchema = new mongoose.Schema({
+    thoughtId: { type: Schema.Types.ObjectId, default: () => new Types.ObjectId()},
     thoughtText: {type: String, required: true, minLength: 1, maxLength: 280},
     createdAt: {type: Date, default: Date.now},
-    username: {type: String, required: true},
+    userName: {type: String, required: true},
     reactions: [reactionSchema],
 },
 {
