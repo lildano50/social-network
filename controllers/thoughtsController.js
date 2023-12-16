@@ -1,4 +1,5 @@
 const Thought = require('../models/Thought');
+const User = require('../models/User');
 
 module.exports = {
     //get all thoughts
@@ -30,6 +31,14 @@ module.exports = {
     //create new thought ***Need to link to associated user***
     async createThought(req, res) {
       try {
+        const user = await Student.findOneAndUpdate(
+          {_id: req.params.userId },
+          { $addToSet: { thoughts: req.body }},
+          { runValidators: true, new: true }
+        );
+
+
+
         const thought = await Thought.create(req.body);
         res.json(thought);
       } catch (err) {
@@ -53,6 +62,12 @@ module.exports = {
           const thought = await Thought.findOneAndRemove(
             {_id: req.params.thoughtId}
           )
+          const user = await User.findOneAndUpdate(
+            {users: req.params.userId},
+            { $pull: { users: req.params.thoughtId }},
+            { new: true }
+          )
+          res.json({ message: "Thought successfully deleted"});
       } catch(err) {
           res.status(500).json(err)
       }
