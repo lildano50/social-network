@@ -5,6 +5,8 @@ const {
   getSingleUser,
   deleteUser,
   updateUser,
+  addFriend, 
+  removeFriend
 } = require('../../controllers/userController.js');
 
 const {
@@ -20,15 +22,20 @@ router.route('/:userId').get(getSingleUser);
 //Update a single user by ID
 router.route('/:userId/update').get(getSingleUser).put(updateUser);
 
-//Delete friend from a user's friend list
-router.route('/:userId/friends/:friendId').delete();
-
-//Add new friend to a user's friend list
-router.route('/:userId/friends/:friendId').post();
-
 // Delete a single user by ID
 router.route('/:userId').get(getSingleUser).delete(deleteUser);
 
+// Create a thought and associate with user
 router.route('/:userId/thoughts').post(createThought);
+
+// ***Friends routes***
+
+//Delete friend from a user's friend list
+router.route('/:userId/friends/:friendId').delete(removeFriend);
+
+//Add new friend to a user's friend list
+router.route('/:userId/friends/:friendId').post(addFriend);
+
+
 
 module.exports = router;
